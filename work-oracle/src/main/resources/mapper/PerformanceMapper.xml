@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chang.dao.PerformanceMapper">
+
+    <select id="getPerformanceCount" resultType="int">
+        select count(*) from "performance"
+    </select>
+
+    <insert id="addPerformance" parameterType="performance">
+        INSERT INTO "CHANG"."performance"
+        ("xh", "bz", "cjbsmc", "kclbmc", "zcj", "xm", "xqmc", "kcxzmc", 
+        "kcywmc", "ksxzmc", "kcmc", "xf") 
+        VALUES 
+        (#{xh,jdbcType=VARCHAR}, #{bz,jdbcType=VARCHAR}, #{cjbsmc,jdbcType=VARCHAR}, #{kclbmc,jdbcType=VARCHAR}, #{zcj,jdbcType=VARCHAR}, #{xm,jdbcType=VARCHAR}, #{xqmc,jdbcType=VARCHAR}, #{kcxzmc,jdbcType=VARCHAR},
+        #{kcywmc,jdbcType=VARCHAR}, #{ksxzmc,jdbcType=VARCHAR}, #{kcmc,jdbcType=VARCHAR}, #{xf,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="addPerformanceList" parameterType="performance">
+         INSERT INTO "CHANG"."performance"
+        ("xh", "bz", "cjbsmc", "kclbmc", "zcj", "xm", "xqmc", "kcxzmc",
+        "kcywmc", "ksxzmc", "kcmc", "xf")
+        <foreach collection="list" item="item" separator="union all">
+            (SELECT
+            #{item.xh,jdbcType=VARCHAR},
+            #{item.bz,jdbcType=VARCHAR},
+            #{item.cjbsmc,jdbcType=VARCHAR},
+            #{item.kclbmc,jdbcType=VARCHAR},
+            #{item.zcj,jdbcType=VARCHAR},
+            #{item.xm,jdbcType=VARCHAR},
+            #{item.xqmc,jdbcType=VARCHAR},
+            #{item.kcxzmc,jdbcType=VARCHAR},
+            #{item.kcywmc,jdbcType=VARCHAR},
+            #{item.ksxzmc,jdbcType=VARCHAR},
+            #{item.kcmc,jdbcType=VARCHAR},
+            #{item.xf,jdbcType=VARCHAR}
+            from dual)
+        </foreach>
+    </insert>
+
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chang.dao.UserMapper">
+
+    <select id="getUserCount" resultType="int">
+        SELECT count(*) FROM "swxy_user"
+    </select>
+
+    <insert id="addUser" parameterType="User">
+        INSERT INTO "swxy_user"
+        ("fxzy", "xh", "xm", "dqszj", "usertype", "yxmc", "xz", "bj", "dh", "email",
+        "rxnf", "xb", "ksh", "nj", "qq", "zymc") VALUES
+        (#{fxzy,jdbcType=VARCHAR}, #{xh,jdbcType=VARCHAR}, #{xm,jdbcType=VARCHAR}, #{dqszj,jdbcType=VARCHAR}, #{usertype,jdbcType=VARCHAR}, #{yxmc,jdbcType=VARCHAR}, #{xz,jdbcType=VARCHAR}, #{bj,jdbcType=VARCHAR}, #{dh,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{rxnf,jdbcType=VARCHAR}, #{xb,jdbcType=VARCHAR}, #{ksh,jdbcType=VARCHAR}, #{nj,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{zymc,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="findUserPerformanceByXh" resultMap="userper">
+        select * from "swxy_user" where "xh" = #{xh}
+    </select>
+
+    <resultMap id="userper" type="UserPerformance">
+        <collection property="list" javaType="list" ofType="performance" select="findPerformanceListByXh" column="xh" />
+    </resultMap>
+
+    <select id="findPerformanceListByXh" resultType="performance">
+        select * from "performance" where "xh" = #{xh}
+    </select>
+
+
+
+</mapper>
